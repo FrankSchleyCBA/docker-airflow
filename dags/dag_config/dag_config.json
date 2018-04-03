@@ -1,0 +1,84 @@
+{
+  "dag_id": "my_json_dag",
+  "schedule_interval": "0 12 * * *",
+  "start_date": "d1 2018-04-03T09:00:00",
+  "end_date": "d1 2020-08-09T11:24:20",
+  "default_args": {
+    "owner": "data_load_acc",
+    "email": "support@cba.com.au",
+    "depends_on_past": false,
+    "catchup": false,
+    "email_on_failure": false,
+    "email_on_retry": false,
+    "retries": 1,
+    "retry_delay": "d2 30"
+  },
+  "tasks": [
+    {
+      "task_id": "dummy_start_point",
+      "task_name": "Start point",
+      "description": "Start point",
+      "operator_type": "dummy",
+      "parameters": {}
+    },
+    {
+      "task_id": "check_dependency",
+      "task_name": "Checking dependency jobs",
+      "description": "Ensure all dependency jobs have been done",
+      "operator_type": "bash",
+      "parameters": {
+        "bash_command": "echo \"Hello World - Check Dependency\""
+      }
+    },
+    {
+      "task_id": "transform_data",
+      "task_name": "Transform Data",
+      "description": "Transform Data ETL",
+      "operator_type": "bash",
+      "parameters": {
+        "bash_command": "echo \"Hello World - ETL\""
+      }
+    },
+    {
+      "task_id": "DQ_1",
+      "task_name": "Data Quality Check 1",
+      "description": "Data Quality Check 1",
+      "operator_type": "bash",
+      "parameters": {
+        "bash_command": "echo \"Hello World - Data Quality Check\""
+      }
+    },
+    {
+      "task_id": "DQ_2",
+      "task_name": "Data Quality Check 2",
+      "description": "Data Quality Check 1",
+      "operator_type": "dummy",
+      "parameters": {}
+    },
+    {
+      "task_id": "dummy_end_point",
+      "task_name": "End Point",
+      "description": "End Point",
+      "operator_type": "dummy",
+      "parameters": {}
+    }
+  ],
+  "dependencies": {
+    "check_dependency": [
+      "dummy_start_point"
+    ],
+    "transform_data": [
+      "check_dependency"
+    ],
+    "DQ_1": [
+      "transform_data"
+    ],
+    "DQ_2": [
+      "transform_data"
+    ],
+    "dummy_end_point": [
+      "DQ_1",
+      "DQ_2"
+    ]
+  }
+}
