@@ -1,13 +1,13 @@
 {
   "dag_id": "my_json_dag_sensor",
-  "schedule_interval": "0 12 * * *",
-  "start_date": "d1 2018-04-03T09:00:00",
-  "end_date": "d1 2020-08-09T11:24:20",
+  "schedule_interval": "50 00 * * *",
+  "start_date": "d1 2018-04-03T00:00:00",
+  "end_date": "d1 2020-08-09T00:00:00",
+  "catchup": false,
   "default_args": {
     "owner": "data_load_acc",
     "email": "support@cba.com.au",
     "depends_on_past": false,
-    "catchup": false,
     "email_on_failure": false,
     "email_on_retry": false,
     "retries": 1
@@ -29,7 +29,7 @@
         "external_dag_id": "my_json_dag",
         "external_task_id": "transform_data",
         "allowed_states" :["success"],
-        "execution_delta": "d2 3600"
+        "execution_delta": "d2 300"
       }
     },
     {

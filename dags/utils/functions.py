@@ -46,7 +46,7 @@ class InvalidConfigError(Exception):
 
 def dag_builder(conf):
     """Return a DAG given a configuration"""
-    dag = DAG(dag_id=conf['dag_id'], schedule_interval=conf['schedule_interval'], start_date=conf['start_date'], default_args=conf['default_args'])
+    dag = DAG(dag_id=conf['dag_id'], schedule_interval=conf['schedule_interval'], start_date=conf['start_date'], catchup=conf['catchup'], default_args=conf['default_args'])
     task_conf = conf.get('tasks', [])
     dep_conf = conf.get('dependencies', [])
     tasks = {}
