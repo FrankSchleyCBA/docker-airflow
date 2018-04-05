@@ -75,7 +75,8 @@ class TestBuildingDagFromConfig(object):
         return {'dag_id': 'first_dag',
                 'schedule_interval': '0 12 * * *',
                 'start_date': '2018-03-24',
+                'catchup': False,
                 'default_args': {
                                  'owner': 'airflow',
                                  'email': 'support@cba.com.au',
-                                 'catchup': False}}
+                                 }}
